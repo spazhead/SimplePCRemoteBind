@@ -107,9 +107,11 @@ void loop() {
         if (results.value == searchval)
         {
             // Pulse the transistor/LED
+            Serial.println("KEY DOWN");
             digitalWrite(SEND_PIN, HIGH);
             digitalWrite(LED_PIN, LOW);
             delay(100);
+            Serial.println("KEY UP");
             digitalWrite(SEND_PIN, LOW);
             digitalWrite(LED_PIN, HIGH);
             // Delay re-enable to slow down double click
