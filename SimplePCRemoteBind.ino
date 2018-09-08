@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #endif
 #include <IRremoteESP8266.h>
+#include "ESP8266WiFi.h"
 #include <IRrecv.h>
 #include <IRutils.h>
 #include <EEPROM.h>
@@ -18,6 +19,8 @@ uint64_t searchval = 0x0;
 
 
 void setup() {
+    WiFi.forceSleepBegin();
+    delay(100);
     Serial.begin(115200);
     EEPROM.begin(512);
     irrecv.enableIRIn();
@@ -43,7 +46,9 @@ void setup() {
         int val = EEPROM.read(i);
         Serial.println(val, HEX);
         searchval = searchval | val<<shift;
+        Serial.println(val<<shift, HEX);
     }
+    Serial.println(byte(searchval>>56), HEX);
     Serial.print("Got ");
     serialPrintUint64(searchval, HEX);
     Serial.println(" from EEPROM");
